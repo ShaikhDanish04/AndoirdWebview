@@ -3,6 +3,6 @@
     <string name="title_activity_start">PVPP Portal</string>
     <string name="no_internet_title">No Internet</string>
 <!--    <string name="base_url">https://portal.pvppcoe.ac.in</string>-->
-    <string name="base_url">http://192.168.1.105/script/android.php</string>
+    <string name="base_url">http://192.168.2.104/script/android.php</string>
 
 </resources>
