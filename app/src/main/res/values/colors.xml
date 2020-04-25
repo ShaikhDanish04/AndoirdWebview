@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!--    <color name="colorPrimary">#0090f7</color>-->
+    <color name="colorPrimary">#3b3b3b</color>
+<!--    <color name="colorPrimaryDark">#1e96e6</color>-->
+    <color name="colorPrimaryDark">#202124</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <!--transparent dialog background color-->
+    <color name="df_transparent_black_background">#80000000</color>
+    <color name="blackTextColor">#000</color>
+    <color name="whiteTextColor">#fff</color>
+    <color name="whiteCardColor">#fff</color>
+</resources>
