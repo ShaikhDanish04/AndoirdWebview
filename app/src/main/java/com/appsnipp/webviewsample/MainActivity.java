@@ -62,8 +62,27 @@ public class MainActivity extends AppCompatActivity {
 //                    }
 //                }
 //        );
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setDomStorageEnabled(true);
+        webView.getSettings().setSavePassword(true);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.addJavascriptInterface(new WebAppInterface(this), "Android");
 
+        webView.setHorizontalScrollBarEnabled(false);
         initWebView();
+    }
+
+    public class WebAppInterface {
+        Context mContext;
+        /** Instantiate the interface and set the context */
+        WebAppInterface(Context c) {
+            mContext = c;
+        }
+        /** Show a toast from the web page */
+        @JavascriptInterface
+        public void showToast(String toast) {
+            Toast.makeText(mContext, toast, Toast.LENGTH_SHORT).show();
+        }
     }
 
     //Requesting permission
@@ -82,8 +101,6 @@ public class MainActivity extends AppCompatActivity {
         //And finally ask for the permission
         ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
     }
-
-
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 
@@ -108,7 +125,6 @@ public class MainActivity extends AppCompatActivity {
         i.setType("image/*");
         MainActivity.this.startActivityForResult( Intent.createChooser( i, "File Chooser" ), MainActivity.FILECHOOSER_RESULTCODE );
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode,
                                     Intent intent) {
@@ -125,15 +141,12 @@ public class MainActivity extends AppCompatActivity {
             mUploadMessage = null;
         }
     }
-
     public void requestCameraPermission() {
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
 
             ActivityCompat.requestPermissions(this, new String[] { android.Manifest.permission.CAMERA, android.Manifest.permission.WRITE_EXTERNAL_STORAGE }, 0);
         }
     }
-
-
     @Override
     public void onBackPressed() {
         if (webView.canGoBack()) {
@@ -177,71 +190,17 @@ public class MainActivity extends AppCompatActivity {
 
 
         });
-//        webView.clearCache(true);
-//        webView.clearHistory();
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.getSettings().setDomStorageEnabled(true);
-        webView.getSettings().setSavePassword(true);
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.addJavascriptInterface(new WebAppInterface(this), "Android");
-
-
-        webView.setHorizontalScrollBarEnabled(false);
-//        webView.setOnTouchListener(new View.OnTouchListener() {
-//            public boolean onTouch(View v, MotionEvent event) {
-//
-//                if (event.getPointerCount() > 1) {
-//                    //Multi touch detected
-//                    return true;
-//                }
-//
-//                switch (event.getAction()) {
-//                    case MotionEvent.ACTION_DOWN: {
-//                        // save the x
-//                        m_downX = event.getX();
-//                    }
-//                    break;
-//
-//                    case MotionEvent.ACTION_MOVE:
-//                    case MotionEvent.ACTION_CANCEL:
-//                    case MotionEvent.ACTION_UP: {
-//                        // set x so that it doesn't move
-//                        event.setLocation(m_downX, event.getY());
-//                    }
-//                    break;
-//                }
-//
-//                return false;
-//            }
-//        });
     }
-    public class WebAppInterface {
-        Context mContext;
-
-        /** Instantiate the interface and set the context */
-        WebAppInterface(Context c) {
-            mContext = c;
-        }
-
-        /** Show a toast from the web page */
-        @JavascriptInterface
-        public void showToast(String toast) {
-            Toast.makeText(mContext, toast, Toast.LENGTH_SHORT).show();
-        }
-    }
-
     private void back() {
         if (webView.canGoBack()) {
             webView.goBack();
         }
     }
-
     private void forward() {
         if (webView.canGoForward()) {
             webView.goForward();
         }
     }
-
     private class MyWebChromeClient extends WebChromeClient {
         Context context;
 
@@ -259,7 +218,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
     }
-
     public  boolean getInternetStatus() {
         ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
